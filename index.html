@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-i18n="meta.title">NxDom PHP — Write JavaScript. Run on PHP.</title>
+  <meta name="description" content="NxDom adalah PHP native extension global: satu instalasi di server, semua aplikasi langsung punya router, database, dan auth — tanpa vendor/, tanpa Node.js di produksi. Developer cukup menulis JavaScript." data-i18n-attr="content|meta.desc" />
+  <link rel="icon" type="image/png" href="icon.png" />
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a href="#home" class="brand">
+        <img src="icon.png" alt="NxDom PHP" class="brand-logo" />
+        <span class="brand-text">NxDom<span class="accent">PHP</span></span>
+      </a>
+      <nav class="nav-links" id="navLinks">
+        <a href="#fitur" data-i18n="nav.features">Fitur</a>
+        <a href="#arsitektur" data-i18n="nav.arch">Arsitektur</a>
+        <a href="#cli" data-i18n="nav.cli">CLI</a>
+        <a href="#pasang" data-i18n="nav.install">Pasang</a>
+      </nav>
+      <div class="nav-actions">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button type="button" data-lang-btn="id" class="active">ID</button>
+          <button type="button" data-lang-btn="en">EN</button>
+        </div>
+        <a class="btn btn-ghost btn-sm" href="https://github.com/sponsors/iyanrsaleh" target="_blank" rel="noopener" style="color: #db61a2; border-color: #db61a2; display: inline-flex; align-items: center; gap: 6px;">
+          <i data-lucide="heart" style="width:14px;height:14px;"></i> Sponsor
+        </a>
+        <a class="btn btn-primary btn-sm" href="https://github.com/iyanrsaleh/nxdom-php" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-glow"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow" data-i18n="hero.badge">nxdom-php v0.0.2 · PHP native extension · MIT</p>
+          <h1 data-i18n-html="hero.title">Tulis <span class="accent">JavaScript</span>, jalan di <span class="accent">PHP</span></h1>
+          <p class="lede" data-i18n-html="hero.desc">
+            NxDom adalah <strong>PHP native extension global</strong>: dipasang sekali di server,
+            semua aplikasi langsung punya router, database, dan auth. Aplikasi tidak membawa
+            <code>vendor/</code>, tidak menyalin runtime, dan <strong>production tidak butuh Node.js</strong>.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#pasang" data-i18n="hero.cta1">Mulai Pasang</a>
+            <a class="btn btn-ghost" href="#arsitektur" data-i18n="hero.cta2">Lihat Arsitektur</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="term-card">
+            <div class="term-bar"><span></span><span></span><span></span><em>nxdom-php</em></div>
+            <pre class="term-body"><span class="t-dim">== php.ini (sekali per server) ==</span>
+extension=nxdom
+
+<span class="t-dim">== www/myapp/ (tanpa nxdom/, tanpa vendor/) ==</span>
+index.html   app.js   assets/
+
+<span class="t-dim">== app.js - developer menulis JavaScript ==</span>
+<span class="t-kw">import</span> nxdom <span class="t-kw">from</span> <span class="t-str">'@nxdom/client'</span>;
+
+<span class="t-kw">const</span> users = <span class="t-kw">await</span> nxdom.db(<span class="t-str">'users'</span>)
+  .where(<span class="t-str">'active'</span>, <span class="t-kw">true</span>)
+  .orderBy(<span class="t-str">'name'</span>).limit(<span class="t-num">10</span>).get();
+
+<span class="t-dim">// server: Apache/Nginx -> PHP -> NxDom (Router/Database/Auth)</span>
+<span class="t-ok">GET /api/users?where=... 200 OK</span></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FITUR -->
+    <section class="section" id="fitur">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title" data-i18n="feat.title">Fitur</h2>
+          <p class="section-subtitle" data-i18n="feat.sub">Runtime backend sebagai extension native — bukan library yang disalin ke setiap aplikasi.</p>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <div class="card-icon"><i data-lucide="server-cog"></i></div>
+            <h3 data-i18n="feat.1t">Satu NxDom, Banyak Aplikasi</h3>
+            <p data-i18n="feat.1d">Extension dimuat di level PHP, bukan di dalam www/. Website A, B, dan C di server yang sama langsung memakai runtime yang sama — satu kali pasang, tanpa duplikasi.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon"><i data-lucide="route"></i></div>
+            <h3 data-i18n="feat.2t">Router di Extension</h3>
+            <p data-i18n="feat.2d">Path seperti /api/users ditangani NxDom lewat front controller generik + rewrite generik (sekali per server). Aplikasi tidak punya Router.php — routing ada di runtime.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon"><i data-lucide="database"></i></div>
+            <h3 data-i18n="feat.3t">Database Aman</h3>
+            <p data-i18n="feat.3d">Query builder + PDO/MySQL dengan prepared statement. SQL mentah dari client ditolak; parameter hanya boleh jadi nilai, bukan nama tabel/kolom — penjagaan eksplisit terhadap SQL injection.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon"><i data-lucide="shield-check"></i></div>
+            <h3 data-i18n="feat.4t">Auth &amp; Policy Terpusat</h3>
+            <p data-i18n="feat.4d">Register, login, session, role, dan API token dijalankan extension. nxdom.policy.json menegakkan fillable, whitelist kolom, dan batas limit — di server, bukan di client.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon"><i data-lucide="file-json"></i></div>
+            <h3 data-i18n="feat.5t">Manifest &amp; Policy JSON</h3>
+            <p data-i18n="feat.5d">Aplikasi mendeklarasikan route dan izin lewat nxdom.config.json, nxdom.manifest.json, dan nxdom.policy.json — ada JSON Schema publik dan validator untuk ketiganya.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon"><i data-lucide="package"></i></div>
+            <h3 data-i18n="feat.6t">Build Dua Platform</h3>
+            <p data-i18n="feat.6d">config.w32 (MSVC/nmake) dan config.m4 (phpize/autotools) — extension dibangun dan diuji di Windows (PHP 8.1 ZTS) maupun Linux (PHP 8.3, aaPanel). CI merilis CLI + SDK otomatis saat tag.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARSITEKTUR -->
+    <section class="section alt" id="arsitektur">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title" data-i18n="arch.title">Arsitektur</h2>
+          <p class="section-subtitle" data-i18n="arch.sub">PHP tetap engine-nya, Apache/Nginx tetap web server-nya — NxDom menyediakan application API di atasnya.</p>
+        </div>
+        <div class="settings-grid">
+          <div class="set-card">
+            <h4><i data-lucide="layers"></i><span data-i18n="arch.1t">Di Level PHP Engine</span></h4>
+            <p data-i18n="arch.1d">Ekstensi native C (Zend Engine API) dimuat lewat extension=nxdom. Hook RINIT/RSHUTDOWN dipakai untuk mengenali aplikasi lewat nxdom.config.json di document root.</p>
+          </div>
+          <div class="set-card">
+            <h4><i data-lucide="git-branch"></i><span data-i18n="arch.2t">Front Controller Generik</span></h4>
+            <p data-i18n="arch.2d">Native extension tidak bisa dipanggil web server tanpa file fisik, jadi ada satu nxdom/index.php generik + aturan rewrite yang di-Include identik di tiap vhost — tetap satu berkas untuk semua aplikasi.</p>
+          </div>
+          <div class="set-card">
+            <h4><i data-lucide="lock"></i><span data-i18n="arch.3t">Isolasi per Aplikasi</span></h4>
+            <p data-i18n="arch.3d">Konfigurasi, policy, dan data tetap terpisah tiap app. File .json konfigurasi diblokir dari akses statis; path traversal dan route halaman divalidasi ketat.</p>
+          </div>
+        </div>
+
+        <div class="compare-note" data-i18n-html="arch.note">
+          <strong>Bukan framework, bukan library:</strong> NxDom tidak hadir sebagai
+          <code>vendor/nxdom/</code> maupun <code>nxdom/</code> di aplikasi Anda. Tidak ada
+          <code>Runtime.php</code>, <code>Router.php</code>, atau <code>Database.php</code>
+          yang perlu ditulis developer — semuanya ada di extension.
+        </div>
+      </div>
+    </section>
+
+    <!-- CLI / SDK -->
+    <section class="section" id="cli">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title" data-i18n="cli.title">CLI &amp; SDK</h2>
+          <p class="section-subtitle" data-i18n="cli.sub">nxdom-php untuk membuat & mengelola aplikasi; @nxdom/client untuk memanggil API dari browser.</p>
+        </div>
+        <div class="term-card wide">
+          <div class="term-bar"><span></span><span></span><span></span><em>terminal</em></div>
+          <pre class="term-body"><span class="t-dim"># CLI - nxdom-php.exe (Node SEA, tanpa Node terpasang) atau npm link</span>
+nxdom-php create myapp     <span class="t-dim"># scaffold aplikasi baru</span>
+nxdom-php dev myapp        <span class="t-dim"># server pengembangan</span>
+nxdom-php build myapp      <span class="t-dim"># build untuk produksi</span>
+nxdom-php config           <span class="t-dim"># kelola konfigurasi</span>
+nxdom-php install          <span class="t-dim"># pasang extension ke PHP</span>
+nxdom-php install-host     <span class="t-dim"># pasang di level host/server</span>
+
+<span class="t-dim"># SDK browser - @nxdom/client</span>
+<span class="t-kw">import</span> nxdom, { NxdomApiError } <span class="t-kw">from</span> <span class="t-str">'@nxdom/client'</span>;
+
+nxdom.db(<span class="t-str">'users'</span>).where(<span class="t-str">'active'</span>, <span class="t-kw">true</span>).get();
+nxdom.db(<span class="t-str">'users'</span>).find(<span class="t-num">1</span>);
+nxdom.db(<span class="t-str">'users'</span>).create({ name: <span class="t-str">'Ada'</span> });
+nxdom.auth.login({ email, password });
+<span class="t-kw">const</span> me = <span class="t-kw">await</span> nxdom.auth.me();</pre>
+        </div>
+        <div class="compare-note" data-i18n-html="cli.note">
+          <strong>Kontrak endpoint:</strong> SDK memanggil <code>/api/{resource}</code> untuk
+          CRUD dan <code>/api/auth/*</code> untuk auth; endpoint model khusus lewat
+          <code>/api/outside</code> dengan resep query yang dideklarasikan di policy —
+          tidak ada eksekusi kode arbitrer dari client.
+        </div>
+      </div>
+    </section>
+
+    <!-- PASANG -->
+    <section class="section alt" id="pasang">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title" data-i18n="ins.title">Cara Pasang</h2>
+          <p class="section-subtitle" data-i18n="ins.sub">Unduh artefak siap pakai dari Release v0.0.2, atau build extension dari source.</p>
+        </div>
+        <div class="dl-grid">
+          <a class="dl-card" href="https://github.com/iyanrsaleh/nxdom-php/releases/download/v0.0.2/nxdom-php.exe" rel="noopener">
+            <span class="dl-icon"><i data-lucide="app-window"></i></span>
+            <strong data-i18n="dl.1t">CLI Windows</strong>
+            <span class="dl-meta">nxdom-php.exe</span>
+          </a>
+          <a class="dl-card" href="https://github.com/iyanrsaleh/nxdom-php/releases/download/v0.0.2/php_nxdom.dll" rel="noopener">
+            <span class="dl-icon"><i data-lucide="file-code-2"></i></span>
+            <strong data-i18n="dl.2t">Extension Windows</strong>
+            <span class="dl-meta">php_nxdom.dll · PHP 8.1 ZTS</span>
+          </a>
+          <a class="dl-card" href="https://github.com/iyanrsaleh/nxdom-php/releases/download/v0.0.2/nxdom.so" rel="noopener">
+            <span class="dl-icon"><i data-lucide="terminal"></i></span>
+            <strong data-i18n="dl.3t">Extension Linux</strong>
+            <span class="dl-meta">nxdom.so · PHP 8.3 NTS</span>
+          </a>
+          <a class="dl-card" href="https://github.com/iyanrsaleh/nxdom-php/releases/download/v0.0.2/nxdom-client-0.0.2.tgz" rel="noopener">
+            <span class="dl-icon"><i data-lucide="package"></i></span>
+            <strong data-i18n="dl.4t">SDK JavaScript</strong>
+            <span class="dl-meta">nxdom-client-0.0.2.tgz</span>
+          </a>
+        </div>
+        <p class="dl-note" data-i18n-html="ins.dlNote">Semua artefak tersedia di <a href="https://github.com/iyanrsaleh/nxdom-php/releases/tag/v0.0.2" target="_blank" rel="noopener">Releases v0.0.2</a>. Versi PHP lain (atau LSPHP) perlu build dari <code>nxdom/src/</code> — lihat <code>install.md</code>.</p>
+
+        <h3 class="subhead" data-i18n="ins.buildTitle">Build Extension dari Source</h3>
+        <div class="install-grid">
+          <div class="term-card">
+            <div class="term-bar"><span></span><span></span><span></span><em>Windows · MSVC (VS16/v142)</em></div>
+            <pre class="term-body"><span class="t-dim"># butuh toolset v142 + PHP 8.1.31 source (lihat install.md)</span>
+call vcvarsall.bat x64 -vcvars_ver=14.29
+set PATH=C:\phpsdk\bin;%PATH%
+C:\phpsdk\bin\phpsdk_buildtree.bat phpmaster
+
+configure --disable-all --enable-cli --enable-nxdom=shared
+nmake
+<span class="t-dim"># hasil: php_nxdom.dll</span></pre>
+          </div>
+          <div class="term-card">
+            <div class="term-bar"><span></span><span></span><span></span><em>Linux · phpize</em></div>
+            <pre class="term-body">cd nxdom/src
+phpize
+./configure --enable-nxdom
+make
+<span class="t-dim"># hasil: nxdom.so</span>
+sudo make install
+
+<span class="t-dim"># aktifkan di php.ini: extension=nxdom</span></pre>
+          </div>
+        </div>
+        <p class="install-note" data-i18n="ins.note">Setelah extension terpasang, ikuti runbook Apache (nxdom-rewrite.conf + Include di tiap vhost) atau panduan nginx pada Apache.md. Aplikasi yang tidak punya nxdom.config.json sama sekali tidak terpengaruh oleh extension ini.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <img src="icon.png" alt="NxDom PHP" class="brand-logo footer-logo" />
+        <div>
+          <strong>NxDom<span class="accent">PHP</span></strong>
+          <p data-i18n="foot.tag">Write JavaScript. Run on PHP. — bagian dari ekosistem NXDOM.</p>
+        </div>
+      </div>
+      <nav class="footer-links">
+        <a href="https://github.com/sponsors/iyanrsaleh" target="_blank" rel="noopener" style="color:#db61a2;">Sponsor</a>
+        <a href="https://github.com/iyanrsaleh/nxdom-php" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://iyanrsaleh.github.io/tatiye/" target="_blank" rel="noopener" data-i18n="foot.company">PT Tatiye Digital Solusindo</a>
+      </nav>
+      <p class="footer-copy" data-i18n="foot.copy">MIT License · © 2026 NXDOM</p>
+    </div>
+  </footer>
+
+  <script src="index.js"></script>
+</body>
+</html>
